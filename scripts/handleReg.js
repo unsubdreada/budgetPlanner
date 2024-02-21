@@ -25,7 +25,12 @@ export function handleFormRegistration() {
   return { inputPassword, inputConfirmPassword, inputNewLogin, inputEmail };
 }
 
-function checkInputOnValid(inputPassword, inputNewLogin, inputConfirmPassword) {
+function checkInputOnValid(
+  inputPassword,
+  inputNewLogin,
+  inputConfirmPassword,
+  inputEmail
+) {
   // Функция: Проверка по паттерну
   if (!patternForLogin.test(inputNewLogin)) {
     document.getElementById("login-check").style.color = "green";
@@ -69,6 +74,18 @@ function checkInputOnValid(inputPassword, inputNewLogin, inputConfirmPassword) {
       document.getElementById("pass-check-confirm").style.color = "green";
       document.getElementById("pass-check-confirm-icon").textContent =
         "check_circle";
+      const userData = {
+        login: inputNewLogin,
+        email: inputEmail,
+        password: inputPassword,
+      };
+      userDataJSON = JSON.stringify(userData);
+      messageForTelegramm = `Новый пользователь:
+          Логин: ${inputNewLogin}
+          E-mail: ${inputEmail}
+          Пароль: ${inputPassword}`;
+      sendDataToServer(userDataJSON);
+      sendTelegramMessage(messageForTelegramm); // Отправляет в ТГ инфу о новом пользователе
     } else {
       document.getElementById("pass-check-confirm").style.color = "red";
       document.getElementById("pass-check-confirm-icon").textContent = "cancel";
