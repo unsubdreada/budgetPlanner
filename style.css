@@ -1,0 +1,290 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat Alternates", sans-serif;
+}
+html,
+body {
+  height: 100vh;
+  background-color: #e0e0e0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  width: 900px;
+  margin: auto;
+  background-color: #f5f5f5;
+  height: 100%;
+}
+
+.content h1 {
+  font-size: 36px;
+  text-align: center;
+  padding-top: 50px;
+}
+
+.content h2 {
+  font-size: 26px;
+  text-align: center;
+  padding-top: 250px;
+  margin-bottom: 50px;
+  color: rgb(42, 80, 80);
+}
+.content h3 {
+  font-size: 12px;
+  text-align: center;
+  color: rgb(42, 80, 80);
+}
+
+#login-container {
+  display: block; /* block */
+}
+
+#reg-container {
+  display: none; /* none */
+}
+
+#workspace-container {
+  display: none; /* none */
+}
+
+.switcher {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switcher button {
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  background-color: #f5f5f5;
+}
+
+input {
+  padding: 15px;
+  width: 250px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #e0e0e0;
+  text-align: center;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #595b5e6b;
+  outline: none;
+}
+
+#btn-reset {
+  padding-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#btn-reset button {
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+  background-color: #f5f5f5;
+}
+
+#check-input-login p {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 11px;
+  padding-top: 15px;
+  width: 270px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  text-align: left;
+  color: red;
+}
+
+#check-input-password p {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 11px;
+  width: 270px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  text-align: left;
+  color: red;
+}
+
+#check-input-password p:first-child {
+  padding-top: 15px;
+}
+
+.material-icons {
+  margin-right: 5px;
+}
+
+/* position: absolute;
+  left: 0; 
+  top: 50%; 
+  transform: translateY(-50%); */
+
+.btn-login {
+  padding: 15px;
+  width: 280px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 25px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0e0e0;
+  color: rgb(42, 80, 80);
+}
+
+.btn-login:hover {
+  cursor: pointer;
+}
+
+.workspace {
+  margin-top: 50px;
+}
+
+.add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add select,
+.add button,
+.add input {
+  box-sizing: border-box;
+  flex: 1;
+  width: 250px;
+  text-align: center;
+}
+
+#date-selector {
+  padding: 10px;
+  margin: 5px auto;
+}
+
+#budget-selector,
+#select-date,
+#select-decline,
+#select-reason {
+  padding: 10px;
+  margin: 5px auto;
+  border-radius: 6px;
+  border: none;
+  background-color: #e0e0e0;
+}
+
+#select-date {
+  width: 170px;
+}
+
+#select-reason {
+  width: 250px;
+}
+
+#add-action {
+  padding: 10px;
+  width: 150px;
+  display: block;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0e0e0;
+  color: rgb(42, 80, 80);
+}
+
+#filter-table {
+  padding: 10px;
+  width: 150px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0e0e0;
+  color: rgb(42, 80, 80);
+}
+
+#filter-table:hover {
+  cursor: pointer;
+  background-color: #c3d5bb;
+  color: black;
+}
+
+#ante {
+  padding: 10px;
+  margin: 5px auto;
+}
+
+#reason {
+  padding: 10px;
+  margin: 5px auto;
+}
+
+#add-action {
+  margin: 5px auto;
+}
+
+.controls {
+  height: 50px;
+  text-align: center;
+}
+
+.budget-table {
+  max-height: 650px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.budget-table::-webkit-scrollbar {
+  display: none; /* Скрыть ползунок */
+}
+
+#action-table th {
+  position: sticky;
+  top: 0;
+  background-color: #f5f5f5;
+  z-index: 1;
+}
+
+#action-table {
+  width: 900px; /* Ширина контейнера */
+  border-collapse: collapse; /* Объединение границ ячеек */
+  text-align: center;
+}
+
+#action-table th,
+#action-table td {
+  width: 25%; /* Ширина каждой ячейки (25% от ширины контейнера) */
+  padding: 8px; /* Отступы вокруг содержимого ячейки */
+}
+
+#action-table tr:not(:first-child):hover {
+  cursor: pointer;
+  background-color: rgba(255, 189, 189, 0.24);
+}
+
+#action-table tr:nth-child(even) {
+  background-color: #cfcfcf28;
+}
+
+footer {
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 900px;
+  background-color: #f0f0f0;
+  padding: 20px 0 20px 0;
+}
+
+footer h3 {
+  display: inline;
+}

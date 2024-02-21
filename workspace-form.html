@@ -1,0 +1,54 @@
+<form id="workspace-form">
+  <h1>Личный кабинет {username}</h1>
+  <div class="workspace">
+    <div class="add">
+      <input
+        type="date"
+        id="date-selector"
+        min="2018-01-01"
+        max="2030-12-31"
+        required
+      />
+      <select class="selector" id="budget-selector" required>
+        <option value="decline">Расход</option>
+        <option value="income">Доход</option>
+      </select>
+      <input
+        type="number"
+        min="1"
+        oninput="validity.valid||(value='');"
+        id="ante"
+        placeholder="Количество деняк"
+        required
+      />
+      <input type="text" id="reason" placeholder="Причина" required />
+      <button type="submit" name="add-action" id="add-action">Добавить</button>
+    </div>
+    <hr style="margin-top: 50px" />
+    <div class="controls">
+      <select id="select-date" class="selector">
+        <option value="">Выберите дату</option>
+      </select>
+      <select id="select-decline" class="selector">
+        <option value="decline">Расход</option>
+        <option value="income">Доход</option>
+      </select>
+      <select id="select-reason" class="selector"></select>
+      <button type="button" id="filter-table">Применить</button>
+    </div>
+    <div class="budget-table">
+      <table id="action-table">
+        <tr>
+          <th>Дата</th>
+          <th>+/-</th>
+          <th>Количество</th>
+          <th>Причина</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+</form>
+<footer>
+  <h3>Итого:</h3>
+  <output id="summary"></output>
+</footer>

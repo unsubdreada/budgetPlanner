@@ -1,0 +1,75 @@
+<form id="reg-form">
+  <h2>Регистрируем:</h2>
+  <div class="inputs">
+    <input
+      type="text"
+      class="input"
+      name="new-login"
+      id="new-login"
+      placeholder="Введите логин"
+      required
+      autofocus
+    />
+    <div id="check-input-login">
+      <p id="login-check">
+        <i class="material-icons" id="login-check-icon">cancel</i>Логин на
+        латинице
+      </p>
+    </div>
+    <input
+      type="email"
+      class="input"
+      name="email"
+      id="email"
+      placeholder="Введите e-mail"
+      required
+    />
+    <input
+      type="text"
+      class="input"
+      name="new-password"
+      id="new-password"
+      placeholder="Придумайте пароль"
+      required
+    />
+    <input
+      type="text"
+      class="input"
+      name="confirm-password"
+      id="confirm-password"
+      placeholder="Повторите пароль"
+      required
+    />
+    <div class="error-notice">
+      <div id="check-input-password">
+        <p id="pass-check-one">
+          <i class="material-icons" id="pass-check-one-icon">cancel</i>Минимум
+          одна цифра
+        </p>
+        <p id="pass-check-two">
+          <i class="material-icons" id="pass-check-two-icon">cancel</i>Минимум
+          одна строчная латинская буква
+        </p>
+        <p id="pass-check-three">
+          <i class="material-icons" id="pass-check-three-icon">cancel</i>Минимум
+          одна заглавная латинская буква
+        </p>
+        <p id="pass-check-four">
+          <i class="material-icons" id="pass-check-four-icon">cancel</i>Пароль
+          минимум 6 символов
+        </p>
+        <p id="pass-check-confirm">
+          <i class="material-icons" id="pass-check-confirm-icon">cancel</i
+          >Пароли не совпадают
+        </p>
+      </div>
+    </div>
+    <div id="btn-reset">
+      <button type="reset">Очистить форму</button>
+    </div>
+  </div>
+  <button type="submit" class="btn-login">Отправить</button>
+  <div class="switcher">
+    <button type="button" id="btn-login">Есть учетная запись</button>
+  </div>
+</form>
