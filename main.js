@@ -1,4 +1,3 @@
-import "./css/style.css";
 import { loadForms } from "./scripts/formLoader.js";
 
 document.addEventListener("DOMContentLoaded", () => {
