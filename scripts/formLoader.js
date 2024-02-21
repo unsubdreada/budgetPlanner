@@ -3,7 +3,7 @@ import {
   handlerCheckInputReg,
   handlerCheckInputRegLogin,
   handlerCheckInputRegConfirmPassword,
-} from "./handleReg";
+} from "./handleReg.js";
 export function loadForms() {
   // Функция: Загрузки форм авторизации, регистрации и рабочего простратства в DOM
   const loginForm = document.getElementById("login-container");
