@@ -10,7 +10,7 @@ export function loadForms() {
   const regForm = document.getElementById("reg-container");
   const workspaceForm = document.getElementById("workspace-container");
   // Загрузка формы авторизации
-  fetch("login-form.html")
+  fetch("./login-form.html")
     .then((response) => response.text())
     .then((html) => {
       loginForm.innerHTML = html;
@@ -22,7 +22,7 @@ export function loadForms() {
     );
 
   // Загрузка формы регистрации
-  fetch("reg-form.html")
+  fetch("./reg-form.html")
     .then((response) => response.text())
     .then((html) => {
       regForm.innerHTML = html;
@@ -35,7 +35,7 @@ export function loadForms() {
     );
 
   // Загрузка формы рабочего пространства
-  fetch("workspace-form.html")
+  fetch("./workspace-form.html")
     .then((response) => response.text())
     .then((html) => {
       workspaceForm.innerHTML = html;
