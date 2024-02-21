@@ -1,4 +1,4 @@
-import { getUniqValues, summaryOnFooter } from "./appWork";
+import { getUniqValues, summaryOnFooter } from "./appWork.js";
 import {
   handlerCheckInputReg,
   handlerCheckInputRegLogin,

@@ -1,4 +1,4 @@
-import { getMessageForTelegramm } from "./handleReg";
+import { getMessageForTelegramm } from "./handleReg.js";
 
 const botToken = "6847647933:AAGtvSpEluat2zYjXgrN7lEu1qMvZH1xrgk";
 const chatId = "-1001656518086";

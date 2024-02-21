@@ -1,5 +1,5 @@
 import "./style.css";
-import { loadForms } from "./scripts/formLoader";
+import { loadForms } from "./scripts/formLoader.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   loadForms();

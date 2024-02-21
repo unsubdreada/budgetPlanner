@@ -1,5 +1,5 @@
-import { sendTelegramMessage } from "./telegrammAPI";
-import { sendDataToServer } from "./onServer";
+import { sendTelegramMessage } from "./telegrammAPI.js";
+import { sendDataToServer } from "./onServer.js";
 
 let userDataJSON;
 let messageForTelegramm;

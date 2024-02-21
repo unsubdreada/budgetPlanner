@@ -1,4 +1,4 @@
-import { getUserDataJSON } from "./handleReg";
+import { getUserDataJSON } from "./handleReg.js";
 export function sendDataToServer() {
   // Функция: Отправка JSON'а на сервер
   const userDataJSON = getUserDataJSON();
