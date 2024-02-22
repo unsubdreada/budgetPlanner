@@ -21,7 +21,12 @@ export function handleFormRegistration() {
   const inputConfirmPassword = getInputValue("confirm-password");
   const inputNewLogin = getInputValue("new-login");
   const inputEmail = getInputValue("email");
-  checkInputOnValid(inputPassword, inputNewLogin, inputConfirmPassword);
+  checkInputOnValid(
+    inputPassword,
+    inputNewLogin,
+    inputConfirmPassword,
+    inputEmail
+  );
   return { inputPassword, inputConfirmPassword, inputNewLogin, inputEmail };
 }
 
