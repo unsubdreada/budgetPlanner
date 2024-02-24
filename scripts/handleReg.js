@@ -1,5 +1,6 @@
 import { sendTelegramMessage } from "./telegrammAPI.js";
 import { sendDataToServer } from "./onServer.js";
+import { checkAvailabilityLoginOnDB } from "./onServer.js";
 
 let userDataJSON;
 let messageForTelegramm;
@@ -57,7 +58,7 @@ function checkPasswordOnValid(password, confirmPassword) {
   return isValidPassword;
 }
 
-export function handleFormRegistration() {
+export async function handleFormRegistration() {
   // Функция: Сбора данных с полей и отправки в ТГ+сервер
   const inputPassword = getInputValue("new-password").trim();
   const inputConfirmPassword = getInputValue("confirm-password").trim();
@@ -73,6 +74,25 @@ export function handleFormRegistration() {
   );
 
   if (isLoginValid && isPasswordValid) {
+    const loginExists = await checkAvailabilityLoginOnDB(inputNewLogin);
+    console.log(loginExists); // Проверяем полученное значение
+    const loginCheckElement = document.getElementById("login-check");
+    const loginCheckElementInput = document.getElementById("new-login");
+
+    if (loginExists) {
+      // Логин занят
+      loginCheckElementInput.style.color = "red";
+      loginCheckElement.textContent = "Такой логин уже существует";
+      loginCheckElement.style.color = "red";
+      loginCheckElement.querySelector(".material-icons").textContent = "cancel";
+    } else {
+      // Логин свободен
+      loginCheckElementInput.style.color = "green";
+      loginCheckElement.textContent = "Логин свободен";
+      loginCheckElement.style.color = "green";
+      loginCheckElement.querySelector(".material-icons").textContent =
+        "check_circle";
+    }
     const userData = {
       login: inputNewLogin,
       email: inputEmail,

@@ -1,5 +1,6 @@
 import { getUniqValues, summaryOnFooter } from "./appWork.js";
 import { handlerCheckInputReg, handleFormRegistration } from "./handleReg.js";
+import { handleFormLogin } from "./handleAuth.js";
 export function loadForms() {
   // Функция: Загрузки форм авторизации, регистрации и рабочего простратства в DOM
   const loginForm = document.getElementById("login-container");
@@ -12,6 +13,8 @@ export function loadForms() {
       loginForm.innerHTML = html;
       const switcherButtonOnReg = document.getElementById("btn-create");
       switcherButtonOnReg.addEventListener("click", switchForm);
+      const buttonOnAuth = document.getElementById("btn-enter");
+      buttonOnAuth.addEventListener("click", handleFormLogin);
     })
     .catch((error) =>
       console.error("Ошибка загрузки формы авторизации:", error)
