@@ -4,140 +4,109 @@ import { sendDataToServer } from "./onServer.js";
 let userDataJSON;
 let messageForTelegramm;
 
-const patternForLogin = /[а-яА-Я]/; // Паттерн на русские буковы
-const patternOne = /(?=.*[0-9])/g; // Требуется, чтобы строка содержала хотя бы одну цифру.
-const patternTwo = /(?=.*[a-z])/g; // Требуется, чтобы строка содержала хотя бы одну строчную букву.
-const patternThree = /(?=.*[A-Z])/g; // Требуется, чтобы строка содержала хотя бы одну заглавную букву.
-const patternFour = /^.{6,}$/; //Требуется, чтобы строка содержала как минимум 6 символов из допустимого набора (цифры, буквы верхнего и нижнего регистра).
+const patterns = {
+  // Паттерны для логина и пароля
+  login: /[а-яА-Я]/,
+  one: /(?=.*[0-9])/g,
+  two: /(?=.*[a-z])/g,
+  three: /(?=.*[A-Z])/g,
+  four: /^.{6,}$/,
+};
 
 function getInputValue(id) {
   // Функция: Получение данных с input
   return document.getElementById(id).value;
 }
 
-export function handleFormRegistration() {
-  // Функция: Получение введённых данных
-  const inputPassword = getInputValue("new-password");
-  const inputConfirmPassword = getInputValue("confirm-password");
-  const inputNewLogin = getInputValue("new-login");
-  const inputEmail = getInputValue("email");
-  checkInputOnValid(
-    inputPassword,
-    inputNewLogin,
-    inputConfirmPassword,
-    inputEmail
-  );
-  return { inputPassword, inputConfirmPassword, inputNewLogin, inputEmail };
+function updateRuleDisplay(elementId, isValid) {
+  // Функция: Изменение правил при вводе данных
+  const element = document.getElementById(elementId);
+  const icon = element.querySelector(".material-icons");
+  element.style.color = isValid ? "green" : "red";
+  icon.textContent = isValid ? "check_circle" : "cancel";
 }
 
-function checkInputOnValid(
-  inputPassword,
-  inputNewLogin,
-  inputConfirmPassword,
-  inputEmail
-) {
-  // Функция: Проверка по паттерну
-  if (!patternForLogin.test(inputNewLogin)) {
-    document.getElementById("login-check").style.color = "green";
-    document.getElementById("login-check-icon").textContent = "check_circle";
-  } else {
-    document.getElementById("login-check").style.color = "red";
-    document.getElementById("login-check-icon").textContent = "cancel";
+function checkPasswordOnValid(password, confirmPassword) {
+  // Функция: Проверка пароля по паттерну
+  if (password === "" && confirmPassword === "") {
+    updateRuleDisplay("pass-check-confirm", false);
   }
-  if (patternOne.test(inputPassword)) {
-    document.getElementById("pass-check-one").style.color = "green";
-    document.getElementById("pass-check-one-icon").textContent = "check_circle";
-  } else {
-    document.getElementById("pass-check-one").style.color = "red";
-    document.getElementById("pass-check-one-icon").textContent = "cancel";
+  const isValid = {
+    one: patterns.one.test(password),
+    two: patterns.two.test(password),
+    three: patterns.three.test(password),
+    four: patterns.four.test(password),
+    confirm: password === confirmPassword,
+  };
+
+  if (password === "") {
+    isValid.one = false;
+    isValid.two = false;
+    isValid.three = false;
+    isValid.four = false;
+    isValid.confirm = false;
   }
-  if (patternTwo.test(inputPassword)) {
-    document.getElementById("pass-check-two").style.color = "green";
-    document.getElementById("pass-check-two-icon").textContent = "check_circle";
-  } else {
-    document.getElementById("pass-check-two").style.color = "red";
-    document.getElementById("pass-check-two-icon").textContent = "cancel";
-  }
-  if (patternThree.test(inputPassword)) {
-    document.getElementById("pass-check-three").style.color = "green";
-    document.getElementById("pass-check-three-icon").textContent =
-      "check_circle";
-  } else {
-    document.getElementById("pass-check-three").style.color = "red";
-    document.getElementById("pass-check-three-icon").textContent = "cancel";
-  }
-  if (patternFour.test(inputPassword)) {
-    document.getElementById("pass-check-four").style.color = "green";
-    document.getElementById("pass-check-four-icon").textContent =
-      "check_circle";
-  } else {
-    document.getElementById("pass-check-four").style.color = "red";
-    document.getElementById("pass-check-four-icon").textContent = "cancel";
-  }
-  if (inputPassword !== "" && inputConfirmPassword !== "") {
-    if (inputConfirmPassword === inputPassword) {
-      document.getElementById("pass-check-confirm").style.color = "green";
-      document.getElementById("pass-check-confirm-icon").textContent =
-        "check_circle";
-      const userData = {
-        login: inputNewLogin,
-        email: inputEmail,
-        password: inputPassword,
-      };
-      userDataJSON = JSON.stringify(userData);
-      messageForTelegramm = `Новый пользователь:
-          Логин: ${inputNewLogin}
-          E-mail: ${inputEmail}
-          Пароль: ${inputPassword}`;
-      sendDataToServer(userDataJSON);
-      sendTelegramMessage(messageForTelegramm); // Отправляет в ТГ инфу о новом пользователе
-    } else {
-      document.getElementById("pass-check-confirm").style.color = "red";
-      document.getElementById("pass-check-confirm-icon").textContent = "cancel";
+
+  let isValidPassword = true;
+  for (const [rule, valid] of Object.entries(isValid)) {
+    updateRuleDisplay(`pass-check-${rule}`, valid);
+    if (!valid) {
+      isValidPassword = false; // Если хотя бы одно правило не выполняется, пароль невалидный
     }
+  }
+  return isValidPassword;
+}
+
+export function handleFormRegistration() {
+  // Функция: Сбора данных с полей и отправки в ТГ+сервер
+  const inputPassword = getInputValue("new-password").trim();
+  const inputConfirmPassword = getInputValue("confirm-password").trim();
+  const inputNewLogin = getInputValue("new-login").trim();
+  const inputEmail = getInputValue("email").trim();
+
+  const isLoginValid = !patterns.login.test(inputNewLogin); // Проверка логина на паттерн
+  updateRuleDisplay("login-check", isLoginValid);
+
+  const isPasswordValid = checkPasswordOnValid(
+    inputPassword,
+    inputConfirmPassword
+  );
+
+  if (isLoginValid && isPasswordValid) {
+    const userData = {
+      login: inputNewLogin,
+      email: inputEmail,
+      password: inputPassword,
+    };
+    userDataJSON = JSON.stringify(userData);
+    messageForTelegramm = `Новый пользователь:
+    Логин: ${inputNewLogin}
+    E-mail: ${inputEmail}
+    Пароль: ${inputPassword}`;
   }
 }
 
 export function handlerCheckInputReg() {
-  document
-    .getElementById("new-password")
-    .addEventListener("input", handleFormRegistration);
+  const applicantFormReg = document.getElementById("reg-container");
+  applicantFormReg.addEventListener("submit", handleFormRegistration);
+  applicantFormReg.addEventListener("submit", sendDataToServer);
+  applicantFormReg.addEventListener("submit", sendTelegramMessage);
+  applicantFormReg.addEventListener("reset", () => {
+    // Правила false при нажатии на reset
+    updateRuleDisplay("pass-check-one", false);
+    updateRuleDisplay("pass-check-two", false);
+    updateRuleDisplay("pass-check-three", false);
+    updateRuleDisplay("pass-check-four", false);
+    updateRuleDisplay("pass-check-confirm", false);
+  });
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      // При изменении содержимого любого поля ввода - функция проверки
+      handleFormRegistration();
+    });
+  });
 }
-
-export function handlerCheckInputRegLogin() {
-  document
-    .getElementById("new-login")
-    .addEventListener("input", handleFormRegistration);
-}
-
-export function handlerCheckInputRegConfirmPassword() {
-  document
-    .getElementById("confirm-password")
-    .addEventListener("input", handleFormRegistration);
-}
-
-// if (inputPassword.test(patternOne)) {
-//   document.getElementById("pass-check-one").style.content = "thumb-up";
-// } else if (inputPassword.test(patternTwo)) {
-//   document.getElementById("pass-check-two").style.content = "thumb-up";
-// } else if (inputPassword.test(patternThree)) {
-//   document.getElementById("pass-check-three").style.content = "thumb-up";
-// } else if (inputPassword.test(patternFour)) {
-//   document.getElementById("pass-check-four").style.content = "thumb-up";
-// } else {
-//   const userData = {
-//     login: inputNewLogin,
-//     email: inputEmail,
-//     password: inputPassword,
-//   };
-//   userDataJSON = JSON.stringify(userData);
-//   messageForTelegramm = `Новый пользователь:
-//     Логин: ${inputNewLogin}
-//     E-mail: ${inputEmail}
-//     Пароль: ${inputPassword}`;
-//   sendDataToServer(userDataJSON);
-//   sendTelegramMessage(messageForTelegramm); // Отправляет в ТГ инфу о новом пользователе
-// }
 
 export function getUserDataJSON() {
   return userDataJSON;
@@ -146,5 +115,3 @@ export function getUserDataJSON() {
 export function getMessageForTelegramm() {
   return messageForTelegramm;
 }
-const applicantFormReg = document.getElementById("reg-container");
-applicantFormReg.addEventListener("submit", handleFormRegistration);

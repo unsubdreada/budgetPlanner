@@ -1,9 +1,5 @@
 import { getUniqValues, summaryOnFooter } from "./appWork.js";
-import {
-  handlerCheckInputReg,
-  handlerCheckInputRegLogin,
-  handlerCheckInputRegConfirmPassword,
-} from "./handleReg.js";
+import { handlerCheckInputReg, handleFormRegistration } from "./handleReg.js";
 export function loadForms() {
   // Функция: Загрузки форм авторизации, регистрации и рабочего простратства в DOM
   const loginForm = document.getElementById("login-container");
@@ -45,8 +41,7 @@ export function loadForms() {
       getUniqValues();
       summaryOnFooter();
       handlerCheckInputReg();
-      handlerCheckInputRegLogin();
-      handlerCheckInputRegConfirmPassword();
+      handleFormRegistration();
     });
 }
 
