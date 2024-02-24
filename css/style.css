@@ -80,7 +80,13 @@ input {
   outline: none;
 }
 
+input:hover {
+  background-color: #dadfeb;
+  transition: 0.5s;
+}
+
 .input:focus {
+  background-color: #dadfeb;
   border-color: #595b5e6b;
   outline: none;
 }
@@ -149,6 +155,8 @@ input {
 
 .btn-login:hover {
   cursor: pointer;
+  background-color: #c7d5fc;
+  transition: 0.5s;
 }
 
 .workspace {
@@ -204,6 +212,12 @@ input {
   color: rgb(42, 80, 80);
 }
 
+#add-action:hover {
+  cursor: pointer;
+  background-color: #c7d5fc;
+  transition: 0.5s;
+}
+
 #filter-table {
   padding: 10px;
   width: 150px;
@@ -215,8 +229,8 @@ input {
 
 #filter-table:hover {
   cursor: pointer;
-  background-color: #c3d5bb;
-  color: black;
+  background-color: #c7d5fc;
+  transition: 0.5s;
 }
 
 #ante {
