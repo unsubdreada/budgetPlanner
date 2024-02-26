@@ -48,28 +48,3 @@ export async function checkAvailabilityLoginOnDB(inputNewLogin) {
     return false;
   }
 }
-
-export async function autorisation(inputNewLoginAuth, inputPasswordAuth) {
-  // Функция: Отправка JSON'а на сервер (Авторизация)
-  console.log(`${inputNewLoginAuth} это ${typeof inputNewLoginAuth}`);
-  try {
-    const response = await fetch(`http://91.205.239.89:8888/api/v1/Login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        inputNewLogin: inputNewLoginAuth,
-        inputPasswordAuth: inputPasswordAuth,
-      }),
-    });
-    if (!response.ok) {
-      throw new Error(`Ошибка при запросе на сервер`);
-    }
-    const data = await response.json();
-    return data.exists;
-  } catch (error) {
-    console.error("Произошла ошибка: ", error);
-    return false;
-  }
-}

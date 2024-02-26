@@ -1,6 +1,7 @@
 import { getUniqValues, summaryOnFooter } from "./appWork.js";
 import { handlerCheckInputReg, handleFormRegistration } from "./handleReg.js";
-import { handleFormLogin } from "./handleAuth.js";
+import { handleFormLogin, checkAuthData, handleLogout } from "./handleAuth.js";
+
 export function loadForms() {
   // Функция: Загрузки форм авторизации, регистрации и рабочего простратства в DOM
   const loginForm = document.getElementById("login-container");
@@ -39,8 +40,8 @@ export function loadForms() {
     .then((html) => {
       workspaceForm.innerHTML = html;
       workspaceForm.style.display = "none"; // Форма рабочего пространства скрыта по умолчанию
-      const loginButton = document.getElementById("btn-enter"); // При клике на Войти переход на форму рабочего пространства, пока без логики авторизации
-      loginButton.addEventListener("click", switchFormOnWork);
+      //const loginButton = document.getElementById("btn-enter"); // При клике на Войти переход на форму рабочего пространства, пока без логики авторизации
+      //loginButton.addEventListener("click", switchFormOnWork);
       getUniqValues();
       summaryOnFooter();
       handlerCheckInputReg();
@@ -63,20 +64,26 @@ export function switchForm(event) {
   }
 }
 
-export function switchFormOnWork(event) {
+export function switchFormOnWork() {
   // Функция: Перехода на форму рабочего пространства
-  event.preventDefault();
   const loginForm = document.getElementById("login-container");
   const workspaceForm = document.getElementById("workspace-container");
+  const userNameElement = document.getElementById("user-name");
+  const exitButton = document.getElementById("exit");
+  // Наличие токена и логина
+  const { accessToken, userName } = checkAuthData();
 
-  if (loginForm.style.display === "none") {
-    loginForm.style.display = "block";
-    workspaceForm.style.display = "none";
-  } else {
+  if (accessToken && userName) {
     loginForm.style.display = "none";
     workspaceForm.style.display = "block";
+    userNameElement.textContent = userName;
+    exitButton.addEventListener("click", handleLogout);
     const currentDate = new Date(); // Получаем текущую дату
-    const formattedDate = currentDate.toISOString().split("T")[0]; // Формат даты до: YYYY-MM-DD
-    document.getElementById("date-selector").value = formattedDate; // Находим селектор даты и вставляем текущую дату
+    const formattedDate = currentDate.toISOString().split("T")[0]; // Формат даты до: YYYY-MM-DD        !!!!!   Исправить    !!!!
+  } else {
+    loginForm.style.display = "block";
+    workspaceForm.style.display = "none";
+    userNameElement.textContent = "";
+    exitButton.removeEventListener("click", handleLogout);
   }
 }
